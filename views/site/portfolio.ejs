@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Portfolio' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: 'Portfolio' }) %>
+<%- include('../partials/marquee', { fixed: true }) %>
+
+<div class="page-hero rv">
+  <h2 class="st">Systems shipped into production.</h2>
+</div>
+
+<section style="padding-top:0">
+  <div class="tile-grid rv">
+    <% portfolio.forEach((p) => { %>
+      <a href="/portfolio/<%= p.id %>" class="tile">
+        <div class="tile-img"<% if (p.image) { %> style="background-image:url('<%= p.image %>')"<% } %>><% if (!p.image) { %>case_study.img<% } %></div>
+        <div class="tile-body">
+          <h4><%= p.name %></h4>
+          <p><%= p.desc %></p>
+          <div class="tag-row">
+            <% p.tags.forEach((t) => { %>
+              <span class="pill"><%= t %></span>
+            <% }) %>
+          </div>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

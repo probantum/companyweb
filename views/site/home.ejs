@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Home' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active }) %>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow"><span class="ldot"></span>Next-Generation AI Platform — 2026</div>
+  <h1 class="htitle">
+    <span class="line"><span>Intelligence</span></span>
+    <span class="line"><span>Built for</span></span>
+    <span class="line"><span class="accent">Finance</span></span>
+  </h1>
+  <p class="hsub">ProBantum Technologies fuses Data Science, Artificial Intelligence, and FinTech to build systems that see further, move faster, and compound value.</p>
+  <div class="hacts">
+    <a href="#services" class="bglow">Explore Solutions</a>
+    <a href="#approach" class="boutl">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 4.5L9 7 5.5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Our Approach
+    </a>
+  </div>
+  <div class="hmets">
+    <div class="met"><div class="mval">240<sup>+</sup></div><div class="mlab">Models Deployed</div></div>
+    <div class="mdiv"></div>
+    <div class="met"><div class="mval">$4.2<sup>B</sup></div><div class="mlab">Assets Optimised</div></div>
+    <div class="mdiv"></div>
+    <div class="met"><div class="mval">99.97<sup>%</sup></div><div class="mlab">Uptime SLA</div></div>
+    <div class="mdiv"></div>
+    <div class="met"><div class="mval">50<sup>+</sup></div><div class="mlab">Enterprise Clients</div></div>
+  </div>
+</section>
+
+<%- include('../partials/marquee') %>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="srv-intro rv">
+    <div><div class="slabel">What We Build</div><h2 class="st">Full-Stack Intelligence Infrastructure</h2></div>
+    <p>From raw data pipelines to production AI and regulated FinTech platforms — every layer engineered for performance, scale, and compliance.</p>
+  </div>
+  <div class="cgrid rv">
+    <% services.forEach((s, i) => { %>
+      <% if (i === 0) { %>
+        <div class="sc lg">
+          <div>
+            <div class="scn"><%= String(i + 1).padStart(2, '0') %> / <%= s.tag %></div>
+            <div class="scico"><%- icons[s.icon] %></div>
+            <h3><%= s.name %></h3>
+            <p><%= s.desc %></p>
+          </div>
+          <div class="scv">
+            <svg viewBox="0 0 200 120" style="width:100%;opacity:.45" fill="none">
+              <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d2ff" stop-opacity=".4"/><stop offset="100%" stop-color="#00d2ff" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0,90 Q20,80 40,70 Q60,55 80,65 Q100,75 120,50 Q140,30 160,20 Q180,12 200,5" stroke="#00d2ff" stroke-width="2" fill="none"/>
+              <path d="M0,90 Q20,80 40,70 Q60,55 80,65 Q100,75 120,50 Q140,30 160,20 Q180,12 200,5 L200,120 L0,120Z" fill="url(#sg)"/>
+            </svg>
+          </div>
+          <div class="scarr">↗</div>
+        </div>
+      <% } else { %>
+        <div class="sc">
+          <div class="scn"><%= String(i + 1).padStart(2, '0') %> / <%= s.tag %></div>
+          <div class="scico"><%- icons[s.icon] %></div>
+          <h3><%= s.name %></h3>
+          <p><%= s.desc %></p>
+          <div class="scarr">↗</div>
+        </div>
+      <% } %>
+    <% }) %>
+  </div>
+  <div class="subgrid rv">
+    <div class="mini-card"><h4>Enterprise Data Foundations</h4><p>Data lakes, warehouses, governance layers, metric stores, and executive dashboards designed for audited decision-making.</p></div>
+    <div class="mini-card"><h4>AI Product Delivery</h4><p>From prototype to production: LLM assistants, prediction engines, fraud models, automation workflows, and monitoring.</p></div>
+    <div class="mini-card"><h4>FinTech Systems</h4><p>Payment intelligence, credit analytics, risk engines, customer segmentation, and secure API-first financial platforms.</p></div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<div class="nband rv">
+  <div class="nbi"><div class="nbar"></div><div class="nval" data-count="240" data-suffix="+">240<sup>+</sup></div><div class="nlab">Models in Production</div></div>
+  <div class="nbi"><div class="nbar"></div><div class="nval" data-count="4.2" data-prefix="$" data-suffix="B">$4.2<sup>B</sup></div><div class="nlab">Assets Optimised</div></div>
+  <div class="nbi"><div class="nbar"></div><div class="nval" data-count="99.97" data-suffix="%">99.97<sup>%</sup></div><div class="nlab">Platform Uptime</div></div>
+  <div class="nbi"><div class="nbar"></div><div class="nval" data-count="50" data-suffix="+">50<sup>+</sup></div><div class="nlab">Enterprise Clients</div></div>
+</div>
+
+<!-- APPROACH -->
+<section id="approach" style="background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 50%,var(--ink) 100%)">
+  <div class="appgrid">
+    <div class="rv">
+      <div class="slabel">How We Work</div>
+      <h2 class="st" style="margin-bottom:3rem">Rigorous.<br>Iterative.<br>Measurable.</h2>
+      <div class="asteps">
+        <div class="astep"><div class="asn">01</div><div class="asb"><h4>Discovery & Data Audit</h4><p>Map your data landscape and define success metrics with quantifiable business value before writing a single line of code.</p></div></div>
+        <div class="astep"><div class="asn">02</div><div class="asb"><h4>Architecture & Prototyping</h4><p>Modular, scalable design validated through rapid prototypes — fail fast in sandboxes so production deployments succeed.</p></div></div>
+        <div class="astep"><div class="asn">03</div><div class="asb"><h4>Build & Integration</h4><p>Engineering excellence with security and compliance embedded from day one, integrating seamlessly with your stack.</p></div></div>
+        <div class="astep"><div class="asn">04</div><div class="asb"><h4>Monitor & Continuously Improve</h4><p>Drift detection, retraining pipelines, and observability ensure your systems compound intelligence over time.</p></div></div>
+      </div>
+    </div>
+    <div class="ovis rv">
+      <div class="oc">
+        <div class="oglow"></div>
+        <div class="or or1"><div class="od"></div></div>
+        <div class="or or2"><div class="ods"></div></div>
+        <div class="or or3"><div class="od"></div></div>
+        <div class="ocen"><span class="ocen-ico">⚡</span><span class="ocen-lbl">ProBantum</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="subgrid rv">
+    <div class="mini-card"><h4>01. Diagnose</h4><p>We assess the business problem, current systems, data quality, risk constraints, and measurable value drivers.</p></div>
+    <div class="mini-card"><h4>02. Engineer</h4><p>We build modular architecture with strong APIs, cloud-native deployment, security, testing, and observability.</p></div>
+    <div class="mini-card"><h4>03. Optimise</h4><p>We monitor model drift, automate retraining, improve performance, and turn insights into continuous business advantage.</p></div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="rv" style="text-align:center;max-width:580px;margin:0 auto">
+    <div class="slabel" style="justify-content:center">Sectors We Serve</div>
+    <h2 class="st">Built for High-Stakes Industries</h2>
+  </div>
+  <div class="igrid rv">
+    <div class="ic"><span class="iico">🏦</span><div class="iname">Banking</div><div class="idesc">Credit scoring, fraud systems, core banking modernisation</div></div>
+    <div class="ic"><span class="iico">📈</span><div class="iname">Capital Markets</div><div class="idesc">Quant strategies, execution algos, risk analytics</div></div>
+    <div class="ic"><span class="iico">🛡️</span><div class="iname">Insurance</div><div class="idesc">Actuarial AI, claims automation, underwriting intelligence</div></div>
+    <div class="ic"><span class="iico">🏥</span><div class="iname">Healthcare</div><div class="idesc">Clinical decision support, imaging AI, interoperability</div></div>
+    <div class="ic"><span class="iico">🌐</span><div class="iname">Government</div><div class="idesc">RegTech, public analytics, secure AI deployments</div></div>
+  </div>
+  <div class="subgrid rv">
+    <div class="mini-card"><h4>Financial Services</h4><p>Credit scoring, portfolio optimisation, fraud detection, AML/KYC workflows, and regulatory reporting intelligence.</p></div>
+    <div class="mini-card"><h4>Health & Public Sector</h4><p>Secure analytics, demand forecasting, operational intelligence, and decision support for high-accountability environments.</p></div>
+    <div class="mini-card"><h4>Growth Businesses</h4><p>Customer analytics, pricing intelligence, automation, CRM enrichment, and AI systems for scalable operations.</p></div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<div class="stksec rv">
+  <div class="stkh">
+    <div><div class="slabel">Technology</div><h2 class="st">Our Stack</h2></div>
+    <p>Best-in-class tooling, cloud-native by design, enterprise-hardened in production.</p>
+  </div>
+  <div class="spills">
+    <span class="sp"><span class="spdot"></span>Python</span>
+    <span class="sp"><span class="spdot"></span>PyTorch</span>
+    <span class="sp"><span class="spdot"></span>TensorFlow</span>
+    <span class="sp"><span class="spdot"></span>Apache Spark</span>
+    <span class="sp"><span class="spdot"></span>Kafka</span>
+    <span class="sp"><span class="spdot"></span>Kubernetes</span>
+    <span class="sp"><span class="spdot"></span>Terraform</span>
+    <span class="sp"><span class="spdot"></span>AWS SageMaker</span>
+    <span class="sp"><span class="spdot"></span>Databricks</span>
+    <span class="sp"><span class="spdot"></span>Snowflake</span>
+    <span class="sp"><span class="spdot"></span>dbt</span>
+    <span class="sp"><span class="spdot"></span>MLflow</span>
+    <span class="sp"><span class="spdot"></span>Ray</span>
+    <span class="sp"><span class="spdot"></span>Airflow</span>
+    <span class="sp"><span class="spdot"></span>LangChain</span>
+    <span class="sp"><span class="spdot"></span>Grafana</span>
+    <span class="sp"><span class="spdot"></span>Prometheus</span>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="rv" style="text-align:center;max-width:760px;margin:0 auto">
+    <div class="slabel" style="justify-content:center">Contact</div>
+    <h2 class="st">Start Your AI, Data or FinTech Project</h2>
+    <p class="page-kicker">Tell us what you want to build. ProBantum can support strategy, data architecture, model development, cloud deployment, dashboards, and regulated financial technology systems.</p>
+  </div>
+
+  <% if (typeof submitted !== 'undefined' && submitted) { %>
+    <div class="contact-card rv success-panel" style="max-width:520px;margin:3rem auto 0">
+      <%- icons.check %>
+      <h3 style="font-family:'Clash Display',sans-serif;font-size:1.4rem">Message received</h3>
+      <p style="color:var(--muted)">We'll be in touch within one business day.</p>
+    </div>
+  <% } else { %>
+    <div class="contact-grid rv">
+      <div class="contact-card">
+        <h3 style="font-family:'Clash Display',sans-serif;font-size:1.6rem;margin-bottom:.7rem">Let’s build with precision.</h3>
+        <p style="color:var(--muted);line-height:1.75">Use this page as the client entry point for enquiries, project scoping, partnerships, and enterprise AI consultations.</p>
+        <div class="contact-list">
+          <div class="contact-item"><b>Email</b><span><%= settings.contactEmail %></span></div>
+          <div class="contact-item"><b>Phone</b><span><%= settings.contactPhone %></span></div>
+          <div class="contact-item"><b>Focus</b><span>Data Science · AI · FinTech · Cloud · Risk Modelling</span></div>
+          <div class="contact-item"><b>Location</b><span><%= settings.contactLocation %></span></div>
+        </div>
+      </div>
+      <form class="contact-card" method="POST" action="/contact" id="contactForm">
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="form-error"><%= error %></div>
+        <% } %>
+        <div class="form-row">
+          <input class="field" type="text" name="name" placeholder="Your name" required>
+          <input class="field" type="text" id="companyField" placeholder="Company / Organisation">
+        </div>
+        <div class="form-row">
+          <input class="field" type="email" name="email" placeholder="Email address" required>
+          <input class="field" type="text" name="topic" placeholder="Project type">
+        </div>
+        <textarea class="field" name="message" id="messageField" placeholder="Briefly describe what you want ProBantum to build..." required></textarea>
+        <button class="bglow contact-submit" type="submit">Send Project Enquiry</button>
+      </form>
+      <script>
+        document.getElementById('contactForm').addEventListener('submit', function () {
+          var company = document.getElementById('companyField').value.trim();
+          var messageField = document.getElementById('messageField');
+          if (company) {
+            messageField.value = 'Company: ' + company + '\n\n' + messageField.value;
+          }
+        });
+      </script>
+    </div>
+  <% } %>
+</section>
+
+<!-- CTA -->
+<div class="ctabl rv">
+  <h2>Ready to Build<br>Something Extraordinary?</h2>
+  <p>Explore Services, Approach, Industries and Contact below, then switch between Day, Dusk and Night themes from the floating controls.</p>
+  <div class="ctacts">
+    <a href="#services" class="bglow">View Services</a>
+    <a href="#contact" class="boutl">Contact ProBantum →</a>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

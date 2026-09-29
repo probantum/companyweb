@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Log in' }) %>
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+    <img src="/assets/logo.png" alt="ProBantum" />
+    <h1>Admin sign in</h1>
+    <% if (error) { %>
+      <div class="form-error" style="margin-bottom: 16px"><%= error %></div>
+    <% } %>
+    <form class="admin-form" method="POST" action="/admin/login">
+      <div class="field">
+        <label for="username">Username</label>
+        <input required id="username" name="username" type="text" autofocus />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input required id="password" name="password" type="password" />
+      </div>
+      <button type="submit" class="btn btn-primary" style="font-size: 14px; padding: 13px; justify-content: center; margin-top: 8px">Sign in</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

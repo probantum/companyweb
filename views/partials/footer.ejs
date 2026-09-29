@@ -1,0 +1,106 @@
+<div class="theme-switcher" aria-label="Theme switcher">
+  <button class="theme-btn" data-theme-choice="day">Day</button>
+  <button class="theme-btn" data-theme-choice="dusk">Dusk</button>
+  <button class="theme-btn active" data-theme-choice="night">Night</button>
+</div>
+
+<footer>
+  <a href="/" class="flogo">
+    <svg width="26" viewBox="0 0 32 32" fill="none"><path d="M5 16 Q9.5 8 16 16 Q22.5 24 27 16" stroke="#00d2ff" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="5" cy="16" r="2.2" fill="#00d2ff"/><circle cx="27" cy="16" r="2.2" fill="#00d2ff"/></svg>
+    <span>Pro<b>Bantum</b></span>
+  </a>
+  <div class="fcopy">© 2026 ProBantum Technologies. All rights reserved.</div>
+  <div class="flinks">
+    <a href="/privacy">Privacy</a>
+    <a href="/legal">Legal</a>
+    <a href="/#contact">Careers</a>
+    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+(() => {
+  const cur = document.getElementById('cursor'), cring = document.getElementById('cring');
+  if (!cur || !cring) return;
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  (function tick() {
+    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    cring.style.left = rx + 'px'; cring.style.top = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* CANVAS PARTICLES */
+(() => {
+  const cv = document.getElementById('bgc');
+  if (!cv) return;
+  const cx = cv.getContext('2d');
+  let W, H, pts = [];
+  function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  class P {
+    constructor() { this.reset(); }
+    reset() { this.x = Math.random() * W; this.y = Math.random() * H; this.r = Math.random() * 1.1 + .3; this.vx = (Math.random() - .5) * .22; this.vy = (Math.random() - .5) * .22; this.a = Math.random() * .45 + .08; }
+    up() { this.x += this.vx; this.y += this.vy; if (this.x < -10 || this.x > W + 10 || this.y < -10 || this.y > H + 10) this.reset(); }
+    draw() { cx.beginPath(); cx.arc(this.x, this.y, this.r, 0, Math.PI * 2); cx.fillStyle = `rgba(0,210,255,${this.a})`; cx.fill(); }
+  }
+  for (let i = 0; i < 100; i++) pts.push(new P());
+  function connect() {
+    for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.hypot(dx, dy);
+      if (d < 120) { cx.beginPath(); cx.moveTo(pts[i].x, pts[i].y); cx.lineTo(pts[j].x, pts[j].y); cx.strokeStyle = `rgba(0,210,255,${.07 * (1 - d / 120)})`; cx.lineWidth = .5; cx.stroke(); }
+    }
+  }
+  (function loop() { cx.clearRect(0, 0, W, H); pts.forEach((p) => { p.up(); p.draw(); }); connect(); requestAnimationFrame(loop); })();
+})();
+
+/* SCROLL REVEAL */
+(() => {
+  const rvEls = document.querySelectorAll('.rv');
+  const obs = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } }); }, { threshold: .07 });
+  rvEls.forEach((el) => obs.observe(el));
+  document.querySelectorAll('.sc,.ic,.nbi').forEach((el, i) => { el.style.transitionDelay = (i * .07) + 's'; });
+})();
+
+/* COUNT-UP */
+(() => {
+  const nobs = new IntersectionObserver((es) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting || e.target._done) return;
+      e.target._done = true;
+      const el = e.target.querySelector('.nval');
+      if (!el) return;
+      const end = parseFloat(el.dataset.count), prefix = el.dataset.prefix || '', suffix = el.dataset.suffix || '';
+      const isF = String(end).includes('.');
+      const sup = document.createElement('sup'); sup.textContent = suffix;
+      const start = performance.now();
+      const dur = 1600;
+      (function step(ts) {
+        const p = Math.min((ts - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const val = isF ? (end * ease).toFixed(2) : Math.floor(end * ease);
+        el.textContent = prefix + val;
+        el.appendChild(sup.cloneNode(true));
+        if (p < 1) requestAnimationFrame(step);
+      })(start);
+    });
+  }, { threshold: .3 });
+  document.querySelectorAll('.nbi').forEach((el) => nobs.observe(el));
+})();
+
+/* DAY / DUSK / NIGHT THEMES */
+(() => {
+  const themeButtons = document.querySelectorAll('[data-theme-choice]');
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('probantum-theme', theme);
+    themeButtons.forEach((btn) => btn.classList.toggle('active', btn.dataset.themeChoice === theme));
+  }
+  themeButtons.forEach((btn) => btn.addEventListener('click', () => setTheme(btn.dataset.themeChoice)));
+  setTheme(localStorage.getItem('probantum-theme') || 'night');
+})();
+</script>

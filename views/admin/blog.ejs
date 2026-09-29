@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Blog posts' }) %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css" />
+<style>
+  .ql-toolbar.ql-snow { border-color: var(--border-strong); border-radius: var(--radius-md) var(--radius-md) 0 0; background: var(--bg-deep); }
+  .ql-container.ql-snow { border-color: var(--border-strong); border-radius: 0 0 var(--radius-md) var(--radius-md); background: var(--bg-deep); font-family: var(--font-sans); font-size: 13px; min-height: 180px; }
+  .ql-editor { color: var(--text); min-height: 180px; }
+  .ql-snow .ql-stroke { stroke: var(--text-muted); }
+  .ql-snow .ql-picker { color: var(--text-muted); }
+  .ql-snow .ql-picker-options { background: var(--surface); }
+  .image-drop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .image-drop input[type='file'] {
+    flex: 1;
+  }
+  .image-drop__preview {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    border: 1px solid var(--border-strong);
+    display: none;
+  }
+  .image-drop__preview.is-visible {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div class="admin">
+  <%- include('../partials/admin-nav', { active }) %>
+  <div class="admin__main">
+    <div class="admin__header">
+      <div>
+        <h2 class="admin__title">Blog posts</h2>
+        <p class="admin__subtitle">Manage the articles shown on the public blog.</p>
+      </div>
+      <div class="admin__header-actions">
+        <button type="button" class="btn btn-primary btn-icon-add" id="blogAddBtn" style="font-size: 13px; padding: 10px 18px">New post</button>
+        <form method="POST" action="/admin/logout">
+          <button type="submit" class="admin__logout">Log out</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% posts.forEach((post) => { %>
+            <tr>
+              <td>
+                <div class="name-cell">
+                  <% if (post.image) { %>
+                    <img src="<%= post.image %>" alt="" style="width: 36px; height: 36px; border-radius: var(--radius-md); object-fit: cover; flex-shrink: 0" />
+                  <% } %>
+                  <span class="row-primary"><%= post.title %></span>
+                </div>
+              </td>
+              <td style="color: var(--text-muted)"><%= post.category %></td>
+              <td style="color: var(--text-muted)"><%= post.author %></td>
+              <td style="color: var(--text-faint)"><%= post.date %></td>
+              <td>
+                <div class="admin-actions">
+                  <button
+                    type="button"
+                    class="icon-btn icon-btn--edit"
+                    title="Edit"
+                    data-edit-trigger="blog"
+                    data-action="/admin/blog/<%= post.id %>"
+                    data-record="<%= JSON.stringify(post) %>"
+                  ><%- icons.edit %></button>
+                  <a href="/blog/<%= post.slug %>" class="icon-btn icon-btn--view" title="View on site" target="_blank"><%- icons.eye %></a>
+                  <form method="POST" action="/admin/blog/<%= post.id %>/delete" onsubmit="return confirm('Delete this post?')">
+                    <button type="submit" class="icon-btn icon-btn--danger" title="Delete"><%- icons.trash %></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (!posts.length) { %>
+            <tr><td colspan="5" class="admin-table-empty">No blog posts yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="blogModal">
+  <div class="modal" style="max-width: 640px">
+    <div class="modal-header">
+      <h3 id="blogModalTitle">New post</h3>
+      <button type="button" class="modal-close" data-modal-dismiss aria-label="Close"><%- icons.close %></button>
+    </div>
+    <form class="admin-form" id="blogForm" method="POST" enctype="multipart/form-data" data-create-action="/admin/blog">
+      <div class="grid-2">
+        <div>
+          <label>Title</label>
+          <input required name="title" />
+        </div>
+        <div>
+          <label>Category</label>
+          <input required name="category" />
+        </div>
+      </div>
+      <div>
+        <label>Excerpt</label>
+        <input required name="excerpt" />
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Author</label>
+          <input required name="author" />
+        </div>
+        <div>
+          <label>Date</label>
+          <input required name="date" placeholder="Jun 4, 2026" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Read time</label>
+          <input name="readTime" placeholder="7 min read" />
+        </div>
+        <div>
+          <label>Tags (comma-separated)</label>
+          <input name="tags" />
+        </div>
+      </div>
+      <div>
+        <label>Cover / hero image</label>
+        <div class="image-drop">
+          <img id="blogImagePreview" class="image-drop__preview" alt="" />
+          <input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" id="blogImageInput" />
+        </div>
+      </div>
+      <div>
+        <label>Content</label>
+        <div id="blogQuillEditor"></div>
+        <input type="hidden" name="content" id="blogContentInput" />
+      </div>
+      <div class="admin-form-actions">
+        <button type="submit" class="btn btn-primary" style="font-size: 13px; padding: 10px 20px"><span id="blogSubmitLabel">Create</span></button>
+        <button type="button" class="btn btn-secondary" style="font-size: 13px; padding: 10px 20px" data-modal-dismiss>Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
+<script src="/js/admin.js"></script>
+<script>
+  const blogQuill = new Quill('#blogQuillEditor', {
+    theme: 'snow',
+    modules: { toolbar: [['bold', 'italic'], ['blockquote'], [{ header: 3 }], ['link'], ['clean']] },
+  });
+
+  const blogImagePreview = document.getElementById('blogImagePreview');
+  const blogImageInput = document.getElementById('blogImageInput');
+
+  blogImageInput.addEventListener('change', () => {
+    const file = blogImageInput.files[0];
+    if (!file) return;
+    blogImagePreview.src = URL.createObjectURL(file);
+    blogImagePreview.classList.add('is-visible');
+  });
+
+  document.getElementById('blogForm').addEventListener('submit', () => {
+    document.getElementById('blogContentInput').value = blogQuill.root.innerHTML;
+  });
+
+  setupCrudModal({
+    overlayId: 'blogModal',
+    formId: 'blogForm',
+    titleId: 'blogModalTitle',
+    submitLabelId: 'blogSubmitLabel',
+    addButtonId: 'blogAddBtn',
+    editGroup: 'blog',
+    addTitle: 'New post',
+    addSubmitLabel: 'Create post',
+    editTitle: 'Edit post',
+    editSubmitLabel: 'Save changes',
+    onReset: () => {
+      blogQuill.setContents([]);
+      blogImagePreview.classList.remove('is-visible');
+      blogImagePreview.src = '';
+    },
+    onPopulate: (record) => {
+      blogQuill.root.innerHTML = record.content || '';
+      if (record.image) {
+        blogImagePreview.src = record.image;
+        blogImagePreview.classList.add('is-visible');
+      } else {
+        blogImagePreview.classList.remove('is-visible');
+        blogImagePreview.src = '';
+      }
+    },
+  });
+</script>
+</body>
+</html>

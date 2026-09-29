@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Not found' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: '' }) %>
+
+<div class="not-found rv in">
+  <div class="slabel" style="justify-content:center">// 404</div>
+  <h1>Page not found</h1>
+  <p>There's nothing at <code><%= path %></code>.</p>
+  <a href="/" class="bglow">Back to home</a>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

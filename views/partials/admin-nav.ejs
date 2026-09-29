@@ -1,0 +1,19 @@
+<%
+const adminNavItems = [
+  { label: 'Dashboard', href: '/admin/dashboard', icon: 'dash' },
+  { label: 'Blog Posts', href: '/admin/blog', icon: 'file' },
+  { label: 'Contact Submissions', href: '/admin/submissions', icon: 'mail2' },
+  { label: 'Contact Cards', href: '/admin/cards', icon: 'users' },
+  { label: 'Portfolio', href: '/admin/portfolio', icon: 'brief' },
+  { label: 'Settings', href: '/admin/settings', icon: 'settings' },
+];
+%>
+<div class="admin__sidebar">
+  <div class="admin__logo"><img src="/assets/logo.png" alt="ProBantum" /></div>
+  <% adminNavItems.forEach((item) => { %>
+    <a href="<%= item.href %>" class="admin__nav-item<%= active === item.label ? ' is-active' : '' %>">
+      <%- icons[item.icon] %>
+      <span><%= item.label %></span>
+    </a>
+  <% }) %>
+</div>

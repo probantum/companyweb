@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Contact cards' }) %>
+<style>
+  .image-drop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .image-drop input[type='file'] {
+    flex: 1;
+  }
+  .image-drop__preview {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-strong);
+    display: none;
+  }
+  .image-drop__preview.is-visible {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div class="admin">
+  <%- include('../partials/admin-nav', { active }) %>
+  <div class="admin__main">
+    <div class="admin__header">
+      <div>
+        <h2 class="admin__title">Contact cards</h2>
+        <p class="admin__subtitle">Team members shown in the digital contact card directory.</p>
+      </div>
+      <div class="admin__header-actions">
+        <button type="button" class="btn btn-primary btn-icon-add" id="cardsAddBtn" style="font-size: 13px; padding: 10px 18px">New member</button>
+        <form method="POST" action="/admin/logout">
+          <button type="submit" class="admin__logout">Log out</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% staff.forEach((person) => { %>
+            <% const initials = person.name.split(' ').map((n) => n[0]).join(''); %>
+            <tr>
+              <td>
+                <div class="name-cell">
+                  <% if (person.image) { %>
+                    <img src="<%= person.image %>" alt="" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0" />
+                  <% } else { %>
+                    <div class="avatar" style="width: 36px; height: 36px; font-size: 13px"><%= initials %></div>
+                  <% } %>
+                  <span class="row-primary"><%= person.name %></span>
+                </div>
+              </td>
+              <td style="color: var(--text-muted)"><%= person.role %></td>
+              <td style="color: var(--text-muted)"><%= person.email %></td>
+              <td style="color: var(--text-faint)"><%= person.phone %></td>
+              <td>
+                <div class="admin-actions">
+                  <button
+                    type="button"
+                    class="icon-btn icon-btn--edit"
+                    title="Edit"
+                    data-edit-trigger="cards"
+                    data-action="/admin/cards/<%= person.id %>"
+                    data-record="<%= JSON.stringify(person) %>"
+                  ><%- icons.edit %></button>
+                  <a href="/cards/<%= person.id %>" class="icon-btn icon-btn--view" title="View on site" target="_blank"><%- icons.eye %></a>
+                  <form method="POST" action="/admin/cards/<%= person.id %>/delete" onsubmit="return confirm('Delete this team member?')">
+                    <button type="submit" class="icon-btn icon-btn--danger" title="Delete"><%- icons.trash %></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (!staff.length) { %>
+            <tr><td colspan="5" class="admin-table-empty">No team members yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cardsModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="cardsModalTitle">New team member</h3>
+      <button type="button" class="modal-close" data-modal-dismiss aria-label="Close"><%- icons.close %></button>
+    </div>
+    <form class="admin-form" id="cardsForm" method="POST" enctype="multipart/form-data" data-create-action="/admin/cards">
+      <div class="grid-2">
+        <div>
+          <label>Full name</label>
+          <input required name="name" />
+        </div>
+        <div>
+          <label>Role</label>
+          <input required name="role" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Email</label>
+          <input required type="email" name="email" />
+        </div>
+        <div>
+          <label>Phone</label>
+          <input required name="phone" />
+        </div>
+      </div>
+      <div>
+        <label>LinkedIn (e.g. linkedin.com/in/jane-doe)</label>
+        <input name="linkedin" />
+      </div>
+      <div>
+        <label>Contact photo (optional — falls back to initials if not set)</label>
+        <div class="image-drop">
+          <img id="cardsImagePreview" class="image-drop__preview" alt="" />
+          <input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" id="cardsImageInput" />
+        </div>
+      </div>
+      <div class="admin-form-actions">
+        <button type="submit" class="btn btn-primary" style="font-size: 13px; padding: 10px 20px"><span id="cardsSubmitLabel">Create</span></button>
+        <button type="button" class="btn btn-secondary" style="font-size: 13px; padding: 10px 20px" data-modal-dismiss>Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
+<script>
+  const cardsImagePreview = document.getElementById('cardsImagePreview');
+  const cardsImageInput = document.getElementById('cardsImageInput');
+
+  cardsImageInput.addEventListener('change', () => {
+    const file = cardsImageInput.files[0];
+    if (!file) return;
+    cardsImagePreview.src = URL.createObjectURL(file);
+    cardsImagePreview.classList.add('is-visible');
+  });
+
+  setupCrudModal({
+    overlayId: 'cardsModal',
+    formId: 'cardsForm',
+    titleId: 'cardsModalTitle',
+    submitLabelId: 'cardsSubmitLabel',
+    addButtonId: 'cardsAddBtn',
+    editGroup: 'cards',
+    addTitle: 'New team member',
+    addSubmitLabel: 'Add member',
+    editTitle: 'Edit team member',
+    editSubmitLabel: 'Save changes',
+    onReset: () => {
+      cardsImagePreview.classList.remove('is-visible');
+      cardsImagePreview.src = '';
+    },
+    onPopulate: (record) => {
+      if (record.image) {
+        cardsImagePreview.src = record.image;
+        cardsImagePreview.classList.add('is-visible');
+      } else {
+        cardsImagePreview.classList.remove('is-visible');
+        cardsImagePreview.src = '';
+      }
+    },
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Blog' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: 'Blog' }) %>
+<%- include('../partials/marquee', { fixed: true }) %>
+
+<div class="page-hero rv">
+  <h2 class="st">Notes from the engineering floor.</h2>
+</div>
+
+<section style="padding-top:0">
+  <div class="tile-grid rv">
+    <% posts.forEach((b) => { %>
+      <a href="/blog/<%= b.slug %>" class="tile">
+        <div class="tile-img"<% if (b.image) { %> style="background-image:url('<%= b.image %>')"<% } %>><% if (!b.image) { %>featured.img<% } %></div>
+        <div class="tile-body">
+          <span class="tile-tag"><%= b.category %></span>
+          <h4><%= b.title %></h4>
+          <p><%= b.excerpt %></p>
+          <span class="tile-meta"><%= b.author %> · <%= b.date %></span>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

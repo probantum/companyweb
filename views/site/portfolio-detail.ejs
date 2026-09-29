@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: item.name }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: 'Portfolio' }) %>
+
+<div class="post-header rv">
+  <div class="slabel" style="justify-content:center">// <%= item.tag %></div>
+  <h1><%= item.name %></h1>
+  <div class="tag-row" style="justify-content:center">
+    <% item.tags.forEach((t) => { %>
+      <span class="pill"><%= t %></span>
+    <% }) %>
+  </div>
+</div>
+
+<div class="post-hero rv">
+  <div class="post-hero-img"<% if (item.image) { %> style="background-image:url('<%= item.image %>')"<% } %>><% if (!item.image) { %>case_study.img<% } %></div>
+</div>
+
+<div class="post-body rv">
+  <p><%= item.desc %></p>
+</div>
+
+<% if (item.gallery && item.gallery.length) { %>
+  <div class="rv" style="max-width:820px;margin:0 auto;padding:0 6vw">
+    <div class="slabel">Gallery</div>
+  </div>
+  <div class="gallery-grid rv">
+    <% item.gallery.forEach((src) => { %>
+      <div class="gallery-item" style="background-image:url('<%= src %>')"></div>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

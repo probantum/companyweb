@@ -1,0 +1,272 @@
+{
+  "blogPosts": [
+    {
+      "id": "b1",
+      "slug": "why-feature-stores-are-the-backbone-of-production-ml",
+      "title": "Why Feature Stores Are the Backbone of Production ML",
+      "category": "MLOps",
+      "excerpt": "Training-serving skew is the default, not the exception — here is how to close the gap.",
+      "author": "James Mwangi",
+      "date": "Jun 4, 2026",
+      "readTime": "7 min read",
+      "tags": [
+        "MLOps",
+        "Feature Stores",
+        "Production ML"
+      ],
+      "content": "<p>Most models fail in production not because the model is wrong, but because the features feeding it drift silently between training and serving. A feature store closes that gap by giving every model — batch or real-time — one governed source of truth.</p><h3>Training-serving skew is the default, not the exception</h3><p>Without a shared registry, teams recompute the same features twice: once offline in a notebook, once online in a service. The two implementations drift the moment either one changes.</p><h3>What good looks like</h3><p>A feature store gives point-in-time correctness for training sets, low-latency lookups for inference, and lineage so risk and compliance teams can trace any prediction back to its inputs.</p>"
+    },
+    {
+      "id": "b2",
+      "slug": "llm-agents-in-regulated-environments",
+      "title": "LLM Agents in Regulated Environments",
+      "category": "AI Engineering",
+      "excerpt": "What compliance teams need to know before shipping an automation agent.",
+      "author": "Amara Ochieng",
+      "date": "May 22, 2026",
+      "readTime": "6 min read",
+      "tags": [
+        "AI Engineering",
+        "Compliance",
+        "LLM Agents"
+      ],
+      "content": "<p>An automation agent that can read a claim, call three internal systems and make a decision is a very different animal from a chatbot. In a regulated environment, every one of those actions needs to be attributable, reversible and explainable after the fact.</p><h3>Give the agent a narrower mandate than the model can handle</h3><p>The model's raw capability is not the constraint — the audit trail is. We scope agents to a fixed set of tool calls with typed inputs and outputs, so every action the agent takes is a structured, loggable event rather than free-form text.</p><h3>Human-in-the-loop is a design decision, not a fallback</h3><p>Decide up front which decision classes require sign-off, and build the review queue as a first-class part of the system rather than an afterthought bolted on once an auditor asks for one.</p>"
+    },
+    {
+      "id": "b3",
+      "slug": "real-time-risk-scoring-at-scale",
+      "title": "Real-Time Risk Scoring at Scale",
+      "category": "FinTech",
+      "excerpt": "Architecture patterns for sub-100ms decisioning under regulatory load.",
+      "author": "David Otieno",
+      "date": "May 9, 2026",
+      "readTime": "8 min read",
+      "tags": [
+        "FinTech",
+        "Risk Modelling",
+        "Real-Time Analytics"
+      ],
+      "content": "<p>A credit or fraud decision that takes 300ms feels instant to a person and glacial to a payment rail. Getting under 100ms end-to-end means treating the scoring path as a hard real-time system, not a web request with a model attached.</p><h3>Keep the hot path free of anything that can block</h3><p>Feature lookups happen from an in-memory or sub-millisecond store, never from the same transactional database that serves the rest of the platform. Anything that can be computed ahead of time — aggregates, embeddings, risk tiers — is precomputed and cached.</p><h3>Design for the regulator's replay, not just the customer's request</h3><p>Every scored transaction is logged with the exact feature values and model version used, so a disputed decision can be reconstructed exactly as it happened months later.</p>"
+    },
+    {
+      "id": "b4",
+      "slug": "from-notebook-to-production-an-mlops-maturity-model",
+      "title": "From Notebook to Production: An MLOps Maturity Model",
+      "category": "MLOps",
+      "excerpt": "A five-stage framework for auditing your model deployment pipeline.",
+      "author": "Sofia Ngugi",
+      "date": "Apr 28, 2026",
+      "readTime": "6 min read",
+      "tags": [
+        "MLOps",
+        "CI/CD",
+        "Observability"
+      ],
+      "content": "<p>Most teams don't lack machine learning talent — they lack a repeatable path from a working notebook to a model that ships, retrains and gets retired safely. We use a five-stage maturity model to diagnose exactly where a pipeline breaks down.</p><h3>Stages 1–3: notebook, script, pipeline</h3><p>Stage one is a data scientist's notebook. Stage two wraps that logic in a versioned script anyone can rerun. Stage three orchestrates it as a scheduled, monitored pipeline with data validation at every step.</p><h3>Stages 4–5: continuous training, full observability</h3><p>Stage four retrains automatically against fresh data and gates promotion behind offline evaluation. Stage five adds production observability — drift detection, shadow deployments and automatic rollback — so a regression is caught before it reaches a customer.</p>"
+    },
+    {
+      "id": "b5",
+      "slug": "algorithmic-trading-infrastructure-latency-risk-resilience",
+      "title": "Algorithmic Trading Infrastructure: Latency, Risk, Resilience",
+      "category": "FinTech",
+      "excerpt": "Design tradeoffs behind execution systems that cannot go down.",
+      "author": "Lindiwe Banda",
+      "date": "Apr 12, 2026",
+      "readTime": "9 min read",
+      "tags": [
+        "FinTech",
+        "Algorithmic Trading",
+        "Resilience"
+      ],
+      "content": "<p>An execution system has three competing priorities — speed, correctness and uptime — and every architectural decision trades one against another. The systems that survive a bad day are the ones that made that tradeoff deliberately.</p><h3>Latency budgets belong on a whiteboard, not in a retro</h3><p>We assign an explicit microsecond budget to every hop — market data ingestion, signal generation, risk checks, order routing — and treat any component that exceeds its budget as a defect, not an optimization opportunity for later.</p><h3>Risk checks are not the thing that slows you down</h3><p>Pre-trade risk limits run in the same process as the execution logic, compiled against the same market state, so safety and speed stop being in tension with each other.</p>"
+    },
+    {
+      "id": "b6",
+      "slug": "designing-dashboards-executives-actually-use",
+      "title": "Designing Dashboards Executives Actually Use",
+      "category": "Data Science",
+      "excerpt": "Decision intelligence beats vanity metrics — a framework for both.",
+      "author": "Paula Carmen",
+      "date": "Mar 30, 2026",
+      "readTime": "5 min read",
+      "tags": [
+        "Data Science",
+        "Executive Dashboards"
+      ],
+      "content": "<p>Most executive dashboards get opened once, admired, and never touched again. The ones that survive share one trait: every number on the screen is tied to a decision someone actually has to make that week.</p><h3>Start from the decision, not the data warehouse</h3><p>Before building a single chart, we write down the three decisions the dashboard needs to inform and work backward to the minimum set of metrics that move those decisions.</p><h3>Vanity metrics crowd out decision intelligence</h3><p>A dashboard with forty tiles trains people to stop looking. We'd rather ship four numbers an executive can defend in a board meeting than forty they can't explain.</p>"
+    }
+  ],
+  "portfolio": [
+    {
+      "id": "p1",
+      "name": "Risk Engine Modernization",
+      "desc": "Real-time credit risk scoring for a tier-1 bank.",
+      "tags": [
+        "FinTech",
+        "Risk Modelling"
+      ],
+      "tag": "FinTech"
+    },
+    {
+      "id": "p2",
+      "name": "LLM Claims Assistant",
+      "desc": "Automation agent triaging insurance claims end-to-end.",
+      "tags": [
+        "AI Engineering",
+        "NLP & LLMs"
+      ],
+      "tag": "AI Engineering"
+    },
+    {
+      "id": "p3",
+      "name": "Real-Time Fraud Detection",
+      "desc": "Sub-100ms fraud scoring across payment rails.",
+      "tags": [
+        "FinTech",
+        "Real-Time Analytics"
+      ],
+      "tag": "FinTech"
+    },
+    {
+      "id": "p4",
+      "name": "Algorithmic Trading Infra",
+      "desc": "Low-latency execution infrastructure for an asset manager.",
+      "tags": [
+        "FinTech",
+        "Algorithmic Trading"
+      ],
+      "tag": "FinTech"
+    },
+    {
+      "id": "p5",
+      "name": "Feature Store & MLOps Pipeline",
+      "desc": "Unified feature platform serving 40+ production models.",
+      "tags": [
+        "Cloud & MLOps"
+      ],
+      "tag": "Cloud & MLOps"
+    },
+    {
+      "id": "p6",
+      "name": "Regulatory Reporting Automation",
+      "desc": "Compliance AI generating audit-ready regulatory filings.",
+      "tags": [
+        "Compliance AI",
+        "Data Science"
+      ],
+      "tag": "Compliance AI"
+    }
+  ],
+  "staff": [
+    {
+      "id": "s1",
+      "name": "Paula Carmen",
+      "role": "Data Analyst",
+      "email": "paula.carmen@probantum.com",
+      "phone": "+254 711 222 301",
+      "linkedin": "linkedin.com/in/paula-carmen"
+    },
+    {
+      "id": "s2",
+      "name": "David Otieno",
+      "role": "AI Engineer",
+      "email": "david.otieno@probantum.com",
+      "phone": "+254 711 222 333",
+      "linkedin": "linkedin.com/in/david-otieno"
+    },
+    {
+      "id": "s3",
+      "name": "Amara Ochieng",
+      "role": "FinTech Lead",
+      "email": "amara.ochieng@probantum.com",
+      "phone": "+254 711 222 312",
+      "linkedin": "linkedin.com/in/amara-ochieng"
+    },
+    {
+      "id": "s4",
+      "name": "Sofia Ngugi",
+      "role": "Cloud & MLOps Engineer",
+      "email": "sofia.ngugi@probantum.com",
+      "phone": "+254 711 222 344",
+      "linkedin": "linkedin.com/in/sofia-ngugi"
+    },
+    {
+      "id": "s5",
+      "name": "James Mwangi",
+      "role": "Data Scientist",
+      "email": "james.mwangi@probantum.com",
+      "phone": "+254 711 222 355",
+      "linkedin": "linkedin.com/in/james-mwangi"
+    },
+    {
+      "id": "s6",
+      "name": "Lindiwe Banda",
+      "role": "Product Manager",
+      "email": "lindiwe.banda@probantum.com",
+      "phone": "+254 711 222 366",
+      "linkedin": "linkedin.com/in/lindiwe-banda"
+    }
+  ],
+  "submissions": [
+    {
+      "id": "sub1",
+      "name": "Grace Kimani",
+      "email": "grace.kimani@example.com",
+      "topic": "AI Engineering",
+      "subject": "AI Engineering inquiry",
+      "message": "We'd like to discuss building an LLM-based automation agent for our support desk.",
+      "date": "Aug 28, 2026",
+      "status": "New"
+    },
+    {
+      "id": "sub2",
+      "name": "Tom Wexford",
+      "email": "tom.wexford@example.com",
+      "topic": "Other",
+      "subject": "Partnership proposal",
+      "message": "Interested in exploring a reseller partnership for the East African market.",
+      "date": "Aug 26, 2026",
+      "status": "Read"
+    },
+    {
+      "id": "sub3",
+      "name": "Naledi Dube",
+      "email": "naledi.dube@example.com",
+      "topic": "FinTech Platforms",
+      "subject": "FinTech Platforms",
+      "message": "Looking for a quote on a lending analytics platform for a microfinance product.",
+      "date": "Aug 24, 2026",
+      "status": "Responded"
+    },
+    {
+      "id": "sub4",
+      "name": "Michael Otieno",
+      "email": "michael.otieno@example.com",
+      "topic": "Cloud & MLOps",
+      "subject": "Cloud & MLOps quote",
+      "message": "Need help standing up a feature store and CI/CD for our ML team.",
+      "date": "Aug 20, 2026",
+      "status": "New"
+    },
+    {
+      "id": "sub5",
+      "name": "Fatima Aliyu",
+      "email": "fatima.aliyu@example.com",
+      "topic": "Other",
+      "subject": "Speaking engagement",
+      "message": "Would one of your engineers be available to speak at our fintech conference?",
+      "date": "Aug 18, 2026",
+      "status": "Read"
+    },
+    {
+      "id": "sub6",
+      "name": "Chen Wei",
+      "email": "chen.wei@example.com",
+      "topic": "Data Science & Analytics",
+      "subject": "Data Science & Analytics",
+      "message": "We need executive dashboards built on top of our existing data warehouse.",
+      "date": "Aug 14, 2026",
+      "status": "Responded"
+    }
+  ]
+}

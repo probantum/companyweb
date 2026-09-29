@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Dashboard' }) %>
+</head>
+<body>
+<div class="admin">
+  <%- include('../partials/admin-nav', { active }) %>
+  <div class="admin__main">
+    <div class="admin__header">
+      <div>
+        <h2 class="admin__title">Dashboard</h2>
+        <p class="admin__subtitle">An overview of site activity.</p>
+      </div>
+      <form method="POST" action="/admin/logout">
+        <button type="submit" class="admin__logout">Log out</button>
+      </form>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-card__value"><%= counts.submissions %></div>
+        <div class="stat-card__label">Contact submissions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value"><%= counts.newSubmissions %></div>
+        <div class="stat-card__label">New &amp; unread</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value"><%= counts.blogPosts %></div>
+        <div class="stat-card__label">Blog posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value"><%= counts.portfolio %></div>
+        <div class="stat-card__label">Portfolio items</div>
+      </div>
+    </div>
+
+    <div class="admin-panel">
+      <h3>Recent submissions</h3>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Subject</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentSubmissions.forEach((row) => { %>
+              <tr>
+                <td><%= row.name %></td>
+                <td style="color: var(--text-muted)"><%= row.subject %></td>
+                <td style="color: var(--text-faint)"><%= row.date %></td>
+                <td>
+                  <% const colors = { New: ['#00d2ff', '#00d2ff'], Read: ['rgba(255,255,255,.18)', 'rgba(255,255,255,.5)'], Responded: ['rgba(240,192,96,.4)', '#f0c060'] }; const c = colors[row.status] || colors.Read; %>
+                  <span class="status-pill" style="border-color: <%= c[0] %>; color: <%= c[1] %>"><%= row.status %></span>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

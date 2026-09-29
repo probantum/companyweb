@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Contact Cards' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: 'Contact Cards' }) %>
+<%- include('../partials/marquee', { fixed: true }) %>
+
+<div class="page-hero rv">
+  <h2 class="st">Meet the team. Scan to save a contact.</h2>
+</div>
+
+<section style="padding-top:0">
+  <div class="staff-grid rv">
+    <% staff.forEach((p) => { %>
+      <% const initials = p.name.split(' ').map((n) => n[0]).join(''); %>
+      <div class="staff-card">
+        <% if (p.image) { %>
+          <div class="avatar"><img src="<%= p.image %>" alt="" /></div>
+        <% } else { %>
+          <div class="avatar"><%= initials %></div>
+        <% } %>
+        <h4><%= p.name %></h4>
+        <div class="staff-role"><%= p.role %></div>
+        <div class="staff-qr"><%- p.qrSvg %></div>
+        <a href="/cards/<%= p.id %>" class="link-arrow">view card →</a>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

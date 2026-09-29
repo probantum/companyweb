@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Privacy Policy' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active }) %>
+
+<div class="post-header rv">
+  <div class="slabel" style="justify-content:center">// Legal</div>
+  <h1>Privacy Policy</h1>
+  <div class="post-meta"><span>Last updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></span></div>
+</div>
+
+<div class="post-body rv">
+  <p>ProBantum Technologies ("ProBantum", "we", "us") builds data, AI and FinTech systems for enterprise clients. This policy explains what information we collect through this website, how we use it, and the choices you have.</p>
+
+  <h2>Information we collect</h2>
+  <p>When you submit the contact form on this site, we collect the name, email address, company/project details and message you provide, so we can respond to your enquiry. We do not require you to create an account or provide payment information to browse this site.</p>
+
+  <h2>How we use your information</h2>
+  <p>We use the information you submit solely to respond to your enquiry, scope potential work, and — where you've agreed to it — follow up about ProBantum's services. We do not sell or rent your information to third parties.</p>
+
+  <h2>Cookies and analytics</h2>
+  <p>This site stores a small amount of data in your browser (such as your preferred Day/Dusk/Night theme) using local storage, which stays on your device and is never transmitted to us. If we add analytics or marketing cookies in the future, this policy will be updated accordingly.</p>
+
+  <h2>Data retention</h2>
+  <p>Contact form submissions are retained only as long as needed to respond to your enquiry and for our internal records, after which they may be archived or deleted.</p>
+
+  <h2>Your rights</h2>
+  <p>You can ask us what information we hold about you, request a correction, or ask us to delete it, by contacting us using the details below.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy can be sent to <a href="mailto:<%= settings.contactEmail %>"><%= settings.contactEmail %></a>.</p>
+
+  <p style="font-size:.85rem;opacity:.7">This page is a general privacy notice and is not a substitute for legal advice. ProBantum should have this reviewed by qualified counsel before relying on it for regulatory compliance.</p>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

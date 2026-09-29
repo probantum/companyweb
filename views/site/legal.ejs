@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: 'Legal' }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active }) %>
+
+<div class="post-header rv">
+  <div class="slabel" style="justify-content:center">// Legal</div>
+  <h1>Terms &amp; Legal</h1>
+  <div class="post-meta"><span>Last updated: <%= new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %></span></div>
+</div>
+
+<div class="post-body rv">
+  <p>These terms govern your use of the ProBantum Technologies website. By browsing this site or submitting an enquiry through it, you agree to the terms below.</p>
+
+  <h2>Website content</h2>
+  <p>The content on this site — including case studies, service descriptions and figures — is provided for general information about ProBantum's capabilities and does not constitute a binding offer, quote, or guarantee of outcome. Specific engagements are governed by a separate signed agreement (such as a statement of work or master services agreement) between ProBantum and the client.</p>
+
+  <h2>Intellectual property</h2>
+  <p>Unless stated otherwise, the ProBantum name, logo, and the design and content of this website are the property of ProBantum Technologies and may not be reproduced without permission.</p>
+
+  <h2>Third-party links</h2>
+  <p>This site may link to third-party services (for example, LinkedIn). ProBantum is not responsible for the content or privacy practices of those external sites.</p>
+
+  <h2>Liability</h2>
+  <p>This site and its content are provided "as is." While we make reasonable efforts to keep information accurate and up to date, ProBantum does not warrant that the site will be error-free or uninterrupted.</p>
+
+  <h2>Governing law</h2>
+  <p>These terms are governed by the laws applicable in the jurisdictions in which ProBantum operates. Specific client engagements may be subject to additional terms agreed in writing.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about these terms can be sent to <a href="mailto:<%= settings.contactEmail %>"><%= settings.contactEmail %></a>.</p>
+
+  <p style="font-size:.85rem;opacity:.7">This page is a general legal notice and is not a substitute for legal advice. ProBantum should have this reviewed by qualified counsel before relying on it.</p>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

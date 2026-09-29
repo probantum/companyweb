@@ -1,0 +1,559 @@
+/* Admin panel — Dark Network (Direction E) — bridges legacy admin tokens onto site.css's variables */
+
+body {
+  /* legacy token aliases — every var(--x) below is referenced throughout this file
+     and inline in the admin views; keeping the same names means none of that has
+     to change, it just resolves to Dark Network colors instead of Terminal Precision's */
+  --bg: var(--ink2);
+  --bg-deep: var(--ink);
+  --surface: var(--ink2); /* solid panel color — used by blog.ejs's Quill dropdown bg and portfolio.ejs's gallery-remove button text color, both need an opaque dark, not the hover tint below */
+  --border-strong: rgba(0, 210, 255, 0.32);
+  --border-faint: var(--faint);
+  --text: var(--white);
+  --text-muted: var(--muted);
+  --text-faint: rgba(255, 255, 255, 0.36);
+  --accent: var(--cyan);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --font-sans: 'Cabinet Grotesk', sans-serif;
+  --font-mono: 'Clash Display', sans-serif;
+  cursor: auto; /* admin has no custom cursor system like the public site */
+}
+
+.admin {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-deep);
+  font-family: var(--font-sans);
+}
+
+.admin__sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--ink2);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin__logo {
+  padding: 0 20px 24px;
+}
+
+.admin__logo img {
+  height: 22px;
+}
+
+.admin__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.admin__nav-item:hover {
+  color: var(--text);
+  background: rgba(0, 210, 255, 0.04);
+}
+
+.admin__nav-item.is-active {
+  background: rgba(0, 210, 255, 0.08);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.admin__nav-item svg {
+  flex-shrink: 0;
+}
+
+.admin__main {
+  flex: 1;
+  padding: 36px 40px;
+  min-width: 0;
+}
+
+.admin__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.admin__title {
+  margin: 0 0 4px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.admin__subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.admin__logout {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.admin__logout:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.admin__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon-add::before {
+  content: '+';
+  font-size: 16px;
+  line-height: 1;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Clash Display', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.admin-table th:last-child,
+.admin-table td:last-child {
+  text-align: right;
+}
+
+.admin-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-faint);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr {
+  transition: background 0.12s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(0, 210, 255, 0.03);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table-empty {
+  padding: 44px 14px;
+  text-align: center;
+  color: var(--text-faint);
+}
+
+.row-primary {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.row-secondary {
+  color: var(--text-faint);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name-cell .avatar {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.status-pill {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  display: inline-block;
+}
+
+.status-select {
+  background: var(--bg-deep);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* ---------- Icon action buttons ---------- */
+
+.admin-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 210, 255, 0.08);
+  color: var(--text);
+}
+
+.icon-btn--edit:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.icon-btn--view:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.icon-btn--danger:hover {
+  color: #ff6b6b;
+  background: rgba(255, 80, 80, 0.1);
+  border-color: rgba(255, 80, 80, 0.3);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--bg);
+  padding: 22px;
+}
+
+.stat-card__value {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.stat-card__label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.admin-panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  margin-bottom: 28px;
+}
+
+.admin-panel h3 {
+  margin: 0 0 16px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-form .grid-2,
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-form label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  width: 100%;
+  padding: 10px 13px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font-sans);
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.admin-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* .field is a plain label+input wrapper in admin forms — reset the public
+   site's .field (which styles a standalone <input>) back to an inert block */
+.admin-form .field,
+.login-page .field {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.form-error {
+  background: rgba(255, 90, 90, 0.08);
+  border: 1px solid rgba(255, 90, 90, 0.3);
+  color: #ff8a8a;
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- Buttons (admin-scoped — the public site uses .bglow/.boutl/.npill) ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-primary {
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
+
+.btn-secondary {
+  background: var(--faint);
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-secondary:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* ---------- Modal ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 3, 4, 0.78);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 24px;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.modal-overlay.is-open {
+  display: flex;
+}
+
+.modal {
+  background: var(--ink2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--ink2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 44px 36px;
+}
+
+.login-card img {
+  height: 24px;
+  margin-bottom: 26px;
+}
+
+.login-card h1 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 26px;
+}
+
+@media (max-width: 900px) {
+  .admin {
+    flex-direction: column;
+  }
+
+  .admin__sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 12px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .admin__logo {
+    display: none;
+  }
+
+  .admin__nav-item {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  .admin__nav-item.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

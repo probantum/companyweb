@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Contact submissions' }) %>
+</head>
+<body>
+<div class="admin">
+  <%- include('../partials/admin-nav', { active }) %>
+  <div class="admin__main">
+    <div class="admin__header">
+      <div>
+        <h2 class="admin__title">Contact submissions</h2>
+        <p class="admin__subtitle">Inbound messages from the public contact form.</p>
+      </div>
+      <form method="POST" action="/admin/logout">
+        <button type="submit" class="admin__logout">Log out</button>
+      </form>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% submissions.forEach((row) => { %>
+            <% const colors = { New: ['#00d2ff', '#00d2ff'], Read: ['rgba(255,255,255,.18)', 'rgba(255,255,255,.5)'], Responded: ['rgba(240,192,96,.4)', '#f0c060'] }; const c = colors[row.status] || colors.Read; %>
+            <tr>
+              <td>
+                <div class="row-primary"><%= row.name %></div>
+                <div class="row-secondary"><%= row.email %></div>
+              </td>
+              <td style="color: var(--text-muted)"><%= row.subject %></td>
+              <td style="color: var(--text-muted); max-width: 320px"><%= row.message %></td>
+              <td style="color: var(--text-faint); white-space: nowrap"><%= row.date %></td>
+              <td>
+                <form method="POST" action="/admin/submissions/<%= row.id %>/status">
+                  <select name="status" class="status-select" style="border-color: <%= c[0] %>; color: <%= c[1] %>" onchange="this.form.submit()">
+                    <% ['New', 'Read', 'Responded'].forEach((s) => { %>
+                      <option value="<%= s %>" <%= row.status === s ? 'selected' : '' %>><%= s %></option>
+                    <% }) %>
+                  </select>
+                </form>
+              </td>
+              <td>
+                <div class="admin-actions">
+                  <form method="POST" action="/admin/submissions/<%= row.id %>/delete" onsubmit="return confirm('Delete this submission?')">
+                    <button type="submit" class="icon-btn icon-btn--danger" title="Delete"><%- icons.trash %></button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (!submissions.length) { %>
+            <tr><td colspan="6" class="admin-table-empty">No submissions yet.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include('../partials/admin-head', { title: 'Settings' }) %>
+</head>
+<body>
+<div class="admin">
+  <%- include('../partials/admin-nav', { active }) %>
+  <div class="admin__main">
+    <div class="admin__header">
+      <div>
+        <h2 class="admin__title">Settings</h2>
+        <p class="admin__subtitle">Site-wide configuration.</p>
+      </div>
+      <form method="POST" action="/admin/logout">
+        <button type="submit" class="admin__logout">Log out</button>
+      </form>
+    </div>
+
+    <div class="admin-panel">
+      <h3>Contact form notifications</h3>
+      <form class="admin-form" method="POST" action="/admin/settings">
+        <div>
+          <label>Notify emails (comma-separated)</label>
+          <textarea name="notifyEmails" placeholder="e.g. hello@probantum.com, sales@probantum.com"><%= (settings.notifyEmails || []).join(', ') %></textarea>
+        </div>
+        <div class="admin-form-actions">
+          <button type="submit" class="btn btn-primary" style="font-size: 13px; padding: 10px 20px">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="admin-panel">
+      <h3>Footer contact details</h3>
+      <form class="admin-form" method="POST" action="/admin/settings/contact">
+        <div class="grid-2">
+          <div>
+            <label>Email</label>
+            <input name="contactEmail" value="<%= settings.contactEmail || '' %>" />
+          </div>
+          <div>
+            <label>Phone</label>
+            <input name="contactPhone" value="<%= settings.contactPhone || '' %>" />
+          </div>
+        </div>
+        <div>
+          <label>Location</label>
+          <input name="contactLocation" value="<%= settings.contactLocation || '' %>" />
+        </div>
+        <div class="admin-form-actions">
+          <button type="submit" class="btn btn-primary" style="font-size: 13px; padding: 10px 20px">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

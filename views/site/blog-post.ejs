@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<%- include('../partials/head', { title: post.title }) %>
+</head>
+<body>
+<%- include('../partials/nav', { active: 'Blog' }) %>
+
+<div class="post-header rv">
+  <div class="slabel" style="justify-content:center"><%= post.category %></div>
+  <h1><%= post.title %></h1>
+  <div class="post-meta">
+    <span><%= post.author %></span><span>·</span><span><%= post.date %></span><span>·</span><span><%= post.readTime %></span>
+  </div>
+</div>
+
+<div class="post-hero rv">
+  <div class="post-hero-img"<% if (post.image) { %> style="background-image:url('<%= post.image %>')"<% } %>><% if (!post.image) { %>hero.img<% } %></div>
+</div>
+
+<div class="post-body rv">
+  <%- post.content %>
+  <div class="post-tags">
+    <% (post.tags || []).forEach((t) => { %>
+      <span class="pill"><%= t %></span>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>
